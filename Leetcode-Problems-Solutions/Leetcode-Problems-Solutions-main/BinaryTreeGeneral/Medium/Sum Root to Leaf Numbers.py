@@ -5,25 +5,22 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def preorder(self,res: List[int], root: Optional[TreeNode]):
+    def sumNumbers(self, root: Optional[TreeNode]) -> int:
         if not root:
-            return
-        res.append(root.val)
-        self.preorder(res,root.left)
-        self.preorder(res,root.right)
-        return res
-
-
-    def flatten(self, root: Optional[TreeNode]) -> None:
-        if not root :
-            return
-        res = self.preorder([],root)
-        if len(res) > 1:
-            current = root
-            current.left = None
-            for i in range(1,len(res)):
-                current.right = TreeNode(res[i])
-                current = current.right
-
-
-        
+            return 0
+        s = 0
+        q = [root]
+        l = [root.val]
+        while q != []:
+            for i in range(len(l)):
+                a = q.pop(0)
+                n = l.pop(0)*10
+                if a.left:
+                    q.append(a.left)
+                    l.append(a.left.val+n)
+                if a.right:
+                    q.append(a.right)
+                    l.append(a.right.val+n)
+                if not a.left and not a.right:
+                    s += n
+        return s//10
